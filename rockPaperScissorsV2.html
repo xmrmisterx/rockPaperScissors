@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+
+    <button id='rockBtn'>Rock</button> 
+    <button id='paperBtn'>Paper</button>
+    <button id='scissorsBtn'>Scissors</button>
+
+<head>
+    <title> RockPaperScissors</title>
+    <meta charset="UTF-8"/>
+
+</head>
+<body>
+    
+    <div class='roundResult'> 
+    </div>
+
+    <script>
+// We tried all sorts of methods of adding the div, mostly from the lesson given, but we went on RossTrang github RPS file, and just physically added the "<div class="roundResult">" inside a made div class, not sure if this was what the DOM lesson intended, but this way did seem to work
+// We needed a 2nd div called winner result to display the roundresult string and the winner result string together
+// outcomesArray= ['Rock', 'Paper', 'Scissors'];
+
+// we test the array for all 3 positions and they do display the correct string
+
+        function computerPlay(){
+
+            outcomesArray= ['Rock', 'Paper', 'Scissors'];
+
+            // we define the array inside the function bc global variables are worse than local ones
+
+            return outcomesArray[Math.floor(Math.random() * outcomesArray.length)];
+
+            // when we did this code to get a random value from the array, we messed up 2 things i) array is followed by [], but we used () ii) we forgot the () from Math.random(), and computerPlay() resulted in an undefined output
+
+        }
+
+//      const playerSelection = prompt('Choose rock, paper, or scissors...');
+        
+//        const computerSelection = computerPlay();
+
+//  const playerSelection = ' ' ; // There was an issue with playerSelection not being defined, and we aren't sure how we fixed it. this playerselection set to a string allows us to puts in all the possible combos in RPS to see if our strings are showing up
+//  const computerSelection = computerPlay();
+
+let playerScore= 0; // There was some weird error when we used const to keep track of these variables, so we changed to a let
+let computerScore= 0;
+
+let playerSelection =''; 
+
+// let computerSelection= '';
+
+// const container = document.querySelector('#container');
+
+// const tiedResult = document.createElement('div');
+// const paperBeatsRock = document.createElement('div');
+
+// tiedResult.classList.add('tiedResult');
+// paperBeatsRock.classList.add('paperBeatsRock');
+
+// paperBeatsRock.textContent= 'You win! ' + playerSelection + ' beats ' + computerSelection + '! You\'ve won ' + playerScore + ' round(s) and the computer has won ' + computerScore + ' round(s).';
+// tiedResult.textContent= 'The computer also chose ' + playerSelection + '. It\'s a tie!';
+
+// container.appendChild(tiedResult);
+// container.appendChild(paperBeatsRock);
+
+
+
+// const div = document.createElement('div');
+
+// div.classList.add('roundResult');
+
+const result = document.querySelector('.roundResult')  // This code is from RossTrang RPS github, we had a hell of a time trying to make a div and changing its text content, but this was very simple, we set a constant to the query results div, and then do ".textContent"
+
+const winner = document.querySelector('.winnerResult')
+// const result= document.querySelector('#div');
+
+        function checkForWinner (){
+
+            if (playerScore>= 5){
+
+//                winner.textContent= 'You\'ve won the round!'; // We thought we needed a 2nd div for winner results bc setting result.textcontent equal to something twice in an if statement, only led it to say the 2nd thing, and we wanted the result of the game displayed as well before declaring the winner for the round. We got around this by using 'result.textcont+= '[space][winner text]' this allowed us to add additional text to the current result.textcontent, which is just alot more clean code i'd say
+               
+               result.textContent+= ' You\'ve won the round!';
+                playerScore= 0;
+                computerScore= 0;
+            } else if (computerScore>= 5){
+//                winner.textContent= 'You\'ve lost the round!';
+                
+                result.textContent+= ' You\'ve lost the round!';
+                playerScore= 0;
+                computerScore= 0;
+
+            }
+
+            
+        }
+
+
+        // we had to put the playerSelection variable outside the playRound function, as it was saying it was already declared, I guess bc it was already in the parameters of the function
+        
+        function playGame (playerSelection, computerSelection) {
+
+// first off, we need to know what the rules of the game are... the player should select, via input, then the computer randomly inputs, then we'll need an if statement or switch statement declaring the rules, and input the resulting winner as a string
+
+        // we're gonna need a bunch of if else statements, or a switch statement, in the playRound function specifying the rules for RPS to find the winner, then output that winner in a string           
+
+ //        playerSelection = prompt('Choose rock, paper, or scissors...');
+
+            
+
+       computerSelection = computerPlay();
+
+    
+
+             if (playerSelection.toUpperCase() == computerSelection.toUpperCase()) {
+
+             result.textContent= ('The computer also chose ' + playerSelection + '. It\'s a tie! You\'ve won ' + playerScore + ' game(s) and the computer has won ' + computerScore + ' game(s).');
+        // in order to be case insensitive, we take the input, and convert it to all upper case, then check the all uppercase string value
+
+            } else if ((playerSelection.toUpperCase()== 'PAPER') && (computerSelection.toUpperCase()== 'ROCK')) {
+
+                // console.log('You win a round! ' + playerSelection + ' beats ' + computerSelection + '!');  // we didn't have a space in ' beats ', so the sentence wasn't spaced right, watch the spacing on strings
+
+                playerScore += 1;  // We need to keep the playerscore and computerscore to determine who wins after 5 rounds of a full game
+
+                // console.log('You\'ve won ' + playerScore + ' round(s) and the computer has won ' + computerScore + ' round(s).');
+                
+            //    console.log('You win a round! ' + playerSelection + ' beats ' + computerSelection + '! You\'ve won ' + playerScore + ' round(s) and the computer has won ' + computerScore + ' round(s).');
+
+                
+              
+            //    paperBeatsRock.textContent= 'You win! ' + playerSelection + ' beats ' + computerSelection + '! You\'ve won ' + playerScore + ' round(s) and the computer has won ' + computerScore + ' round(s).';
+
+                result.textContent= ('You win a game! ' + playerSelection + ' beats ' + computerSelection + '! You\'ve won ' + playerScore + ' game(s) and the computer has won ' + computerScore + ' game(s).');
+
+                checkForWinner();
+
+            } else if ((playerSelection.toUpperCase()== 'ROCK') && (computerSelection.toUpperCase()== 'SCISSORS')){
+
+ //               result.textContent= ('You win a round! ' + playerSelection + ' beats ' + computerSelection + '!');
+
+                playerScore += 1;
+
+           //     console.log('You\'ve won ' + playerScore + ' rounds');
+           result.textContent= ('You win a game! ' + playerSelection + ' beats ' + computerSelection + '! You\'ve won ' + playerScore + ' game(s) and the computer has won ' + computerScore + ' game(s).');
+
+           checkForWinner();
+
+            } else if((playerSelection.toUpperCase()== 'SCISSORS') && (computerSelection.toUpperCase()== 'PAPER')){
+                
+ //               result.textContent= ('You win a game! ' + playerSelection + ' beats ' + computerSelection + '!' );
+
+                playerScore += 1;
+
+                result.textContent= ('You win a game! ' + playerSelection + ' beats ' + computerSelection + '! You\'ve won ' + playerScore + ' game(s) and the computer has won ' + computerScore + ' game(s).');
+
+                checkForWinner();
+
+            } else if ((playerSelection.toUpperCase()== 'PAPER') && (computerSelection.toUpperCase()== 'SCISSORS')) {
+
+//                result.textContent= ('You lose a round! ' + computerSelection + ' beats ' + playerSelection + '!'); 
+
+                computerScore += 1;
+
+                result.textContent= ('You lose a game! ' + computerSelection + ' beats ' + playerSelection + '! The computer has won ' + computerScore + ' game(s) and you\'ve won ' + playerScore + ' game(s).');
+
+                checkForWinner();
+
+            } else if ((playerSelection.toUpperCase()== 'ROCK') && (computerSelection.toUpperCase()== 'PAPER')){
+
+//                result.textContent= ('You lose a round! ' + computerSelection + ' beats ' + playerSelection + '!');
+
+                computerScore += 1;
+
+                result.textContent= ('You lose a game! ' + computerSelection + ' beats ' + playerSelection + '! The computer has won ' + computerScore + ' game(s) and you\'ve won ' + playerScore + ' game(s).');
+
+                checkForWinner();
+
+            } else if((playerSelection.toUpperCase()== 'SCISSORS') && (computerSelection.toUpperCase()== 'ROCK')){
+                
+ //               result.textContent= ('You lose a round! ' + computerSelection + ' beats ' + playerSelection + '!');
+
+                computerScore += 1;
+
+                result.textContent= ('You lose a game! ' + computerSelection + ' beats ' + playerSelection + '! The computer has won ' + computerScore + ' game(s) and you\'ve won ' + playerScore + ' game(s).');
+
+                checkForWinner();
+
+            }
+
+            
+
+        }
+
+        // function game(){
+
+        //     playRound();
+        //     playRound();
+        //     playRound();
+        //     playRound();
+        //     playRound(); 
+           
+        //     if (playerScore>computerScore){
+
+        //         console.log('You won ' + playerScore + ' rounds and the computer won ' + computerScore + ' rounds.');
+                
+        //         console.log('You\'ve won the game!');
+
+        //     } else if (computerScore>playerScore){
+
+        //         console.log('You won ' + playerScore + ' rounds and the computer won ' + computerScore + ' rounds.');
+                
+        //         console.log('You\'ve lost the game!');
+
+        //     } else {  // Don't forget that the last else of the else if statement, does not have parenthesis like the previous ones, just brackers after it
+
+        //     console.log('You won ' + playerScore + ' rounds and the computer won ' + computerScore + ' rounds.');
+                
+        //         console.log ('Look\'s like there is no winner.');
+
+        //     }
+
+        //     playerScore = 0;  // At the end of the game, we want to reset the scores
+        //     computerScore= 0; 
+
+        // }
+
+        const scissorsBtn= document.querySelector('#scissorsBtn');
+        scissorsBtn.addEventListener('click', () => {
+
+            playGame('Scissors');
+
+        });
+    
+
+        const paperBtn= document.querySelector('#paperBtn');
+        paperBtn.addEventListener('click', () => {
+            playGame('Paper');
+        });
+
+        const rockBtn= document.querySelector('#rockBtn');
+        rockBtn.addEventListener('click', () => {
+            playGame('Rock');
+        });
+
+        // const content = document.createElement('div');
+        // content.classList.add('content');
+        // content.textContent = 'This is the glorious text-content!';
+
+        
+        // container.appendChild(content);
+
+        // const resultsDiv = document.createElement('div');   // do we need to create a divresults class for each possible result? it seems so?
+        // resultsDiv.textContent= 'results';  // do we need to add a container for div? not sure
+
+
+    //    tiedResult.textContent= ('The computer also chose ' + playerSelection + '. It\'s a tie!');
+
+
+     //   paperBeatsRock.textContent= ('You win! ' + playerSelection + ' beats ' + computerSelection + '! You\'ve won ' + playerScore + ' round(s) and the computer has won ' + computerScore + ' round(s).');
+
+// playGame('ROCK','PAPER')
+
+// playGame('ROCK', 'SCISSORS')
+
+// playGame('ROCK','ROCK')
+
+// playGame('PAPER', 'ROCK')
+
+// playGame ('PAPER', 'SCISSORS')
+
+// playGame ('PAPER', 'PAPER')
+
+// playGame ('SCISSORS', 'PAPER')
+
+// playGame ('SCISSORS', 'ROCK')
+
+// playGame ('SCISSORS', 'SCISSORS')
+    </script>
+
+</body>
+</html>
